@@ -24,6 +24,12 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+// GET [project_url]/api/timestamp/:date_string?
+app.get('/api/timestamp/:date_string', function(req, res) {
+  const {body} = req;
+  res.json({body});
+});
+
 
 
 // listen for requests :)
