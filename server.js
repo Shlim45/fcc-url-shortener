@@ -27,8 +27,17 @@ app.get("/api/hello", function (req, res) {
 // GET [project_url]/api/timestamp/:date_string?
 app.get('/api/timestamp/:date_string', function(req, res) {
   const dateString = req.params.date_string;
-
-  const date = new Date(Number(dateString));
+  let date;
+  console.log(dateString);
+  if (!isNaN(Number(dateString))) {
+    console.log('passed', Number(dateString));
+    date = new Date(Number(dateString));
+  } else {
+    date = new Date(Date.parse(dateString));
+  }
+  
+  console.log('date', date);
+  
   if (date !== 'Invalid Date') {
     console.log(date);
     //{"unix": <date.getTime()>, "utc" : <date.toUTCString()> }
