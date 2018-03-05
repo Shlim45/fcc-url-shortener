@@ -2,8 +2,13 @@
 // where your node app starts
 
 // init project
+var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
+
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(bodyParser.json());
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
@@ -26,8 +31,7 @@ app.get("/api/hello", function (req, res) {
 
 // GET [project_url]/api/timestamp/:date_string?
 app.get('/api/timestamp/:date_string', function(req, res) {
-  const {body} = req;
-  res.json({body});
+  console.log(req.body);
 });
 
 
