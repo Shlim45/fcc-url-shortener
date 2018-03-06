@@ -1,19 +1,13 @@
 
-# API Project: Timestamp Microservice for FCC
+# API Project: Request Header Parser for FCC
 
 ### User stories :
 
-1. The API endpoint is `GET [project_url]/:date_string?`
-2. A date string is valid if can be successfully parsed by `new Date(date_string)` (JS) . Note that the unix timestamp needs to be an **integer** (not a string) specifying **milliseconds**. In our test we will use date strings compliant with ISO-8601 (e.g. `"2016-11-20"`) because this will ensure an UTC timestamp.
-3. If the date string is **valid** the api returns a JSON having the structure 
-`{"unix": <date.getTime()>, "utc" : <date.toUTCString()> }`
-e.g. `{"unix": 1479663089000 ,"utc": "Sun, 20 Nov 2016 17:31:29 GMT"}`.
-4. If the date string is **invalid** the api returns a JSON having the structure `{"unix": null, "utc" : null }`.
+1. The API endpoint is `GET https://juniper-shallot.glitch.me/api/whoami`
+2. I can get the IP address, language and operating system for my browser.
 
 #### Example usage:
-* https://azure-dive.glitch.me/2015-12-25
-* https://azure-dive.glitch.me/December 25, 2015
-* https://azure-dive.glitch.me/1451001600000
+* GET https://juniper-shallot.glitch.me/api/whoami
 
 #### Example output:
-* { unix: 1451001600000, utc: "Fri, 25 Dec 2015 00:00:00 GMT" }
+* { ipaddress: "192.168.1.1", language: "en-US", software: "Windows NT 10.0; Win64; x64" }
