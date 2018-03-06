@@ -24,7 +24,7 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get('/api/timestamp/:date_string', function(req, res) {
+app.get('/:date_string', function(req, res) {
   const dateString = req.params.date_string;
   let date;
   
@@ -42,7 +42,10 @@ app.get('/api/timestamp/:date_string', function(req, res) {
       "utc": date.toUTCString(),
     });
   } else {
-    res.json({"error" : "Invalid Date" });
+    res.json({
+      "unix" : null,
+      "utc": null,
+    });
   }
 });
 
