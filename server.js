@@ -24,8 +24,10 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-app.get("/new/:url", function(req, res) {
-  const url = req.params.url.toLowerCase();
+app.get("/new/*", function(req, res) {
+  
+  const url = req.url.substring('/new/', req.url.length);
+  console.log(url);
   
   if (url.startsWith('http://') || url.startsWith('https://')) {
       // must contain at least one .
@@ -41,23 +43,13 @@ app.get("/new/:url", function(req, res) {
               res.json(newShort);
             }
           });
+      } else {
+        res.send("<h1>Bad request</h1>");
       }
+  } else {
+    res.send("<h1>Bad request</h1>");
   }
 
-});
-
-app.get('/api/whoami', function(req, res) {
-  const {headers} = req;
-  
-  const ipaddress = headers['x-forwarded-for'].substring(0, headers['x-forwarded-for'].indexOf(','));  
-  const language = headers['accept-language'].substring(0, headers['accept-language'].indexOf(','));
-  const software = headers['user-agent'].substring(headers['user-agent'].indexOf('(') + 1, headers['user-agent'].indexOf(')'));
-  
-  res.json({
-    ipaddress,
-    language,
-    software,
-  });
 });
 
 // listen for requests
