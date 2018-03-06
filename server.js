@@ -4,6 +4,11 @@
 // init project
 var express = require('express');
 var app = express();
+var mongoose = require('mongoose');
+
+// mongodb://<dbuser>:<dbpassword>@ds257838.mlab.com:57838/fcc-apis
+const URL = process.env.MONGOLAB_URI;
+console.log(URL);
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
