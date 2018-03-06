@@ -33,7 +33,7 @@ app.get("/new/*", function(req, res) {
       // must contain at least one .
       if (url.indexOf('.') > url.indexOf('://')) {
         // could overwrite
-          const id = Math.floor(Math.random() * (1000 - 9999) + 1000);
+          const id = Math.round(Math.random() * (9999 - 1000) + 1000);
           Shortened.create({ id, url }, function(err, newShort) {
             if (err) {
               console.error(err);
@@ -49,17 +49,23 @@ app.get("/new/*", function(req, res) {
             }
           });
       } else {
-        res.send("<h1>Bad request</h1>");
+        res.json({"error":"URL Invalid"});
       }
   } else {
-    res.send("<h1>Bad request</h1>");
+    res.json({"error":"URL Invalid"});
   }
 
 });
 
-app.get("/new/:id", function(req, res) {
+app.get("/:id", function(req, res) {
   const {id} = req.params;
-  
+  Shortened.findOne({id}).exec(function(err, url) {
+    if (err || !url) {
+      res.send("<h1>Error...</h1><p>Invalid short URL</p>");
+      return;
+    }
+    res.redirect(url.url);
+  });
 });
 
 // listen for requests
