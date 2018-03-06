@@ -3,7 +3,7 @@
 <html>
 
    <head>
-      <title>Request Header Parser</title>
+      <title>URL Shortener</title>
       <link rel="shortcut icon" href="https://cdn.hyperdev.com/us-east-1%3A52a203ff-088b-420f-81be-45bf559d01b1%2Ffavicon.ico" type="image/x-icon"/>
       <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
       <link href="style.css" rel="stylesheet" type="text/css">
@@ -12,16 +12,17 @@
    <body>
 
       <div class="container">
-        <h2>API Project: Request Header Parser</h2>
+        <h2>API Project: URL Shortener</h2>
         <h3>User Stories :</h3>
         <ol class="user-stories">
-          <li>The API endpoint is <code>GET https://juniper-shallot.glitch.me/api/whoami</code></li>
-          <li>I can get the IP address, language and operating system for my browser.</li>
+          <li>I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.</li>
+          <li>If I pass an invalid URL that doesn't follow the valid http://www.example.com format, the JSON response will contain an error instead.</li>
+          <li>When I visit that shortened URL, it will redirect me to my original link.</li>
         </ol>
 
         <h3>Example Usage:</h3>
         <ul>
-          <li><code>GET https://juniper-shallot.glitch.me/api/whoami</code></li>
+          <li><code>GET https://friendly-surfboard.glitch.me/new/:url</code></li>
         </ul>
 
         <h3>Example Output:</h3>
