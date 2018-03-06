@@ -18,29 +18,13 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-app.get('/:date_string', function(req, res) {
-  const dateString = req.params.date_string;
-  let date;
+app.get('/api/whoami', function(req, res) {
+  const {headers} = req;
   
-  if (!isNaN(Number(dateString))) {
-    date = new Date(Number(dateString));
-  } else {
-    date = new Date(Date.parse(dateString));
-  }
+  console.log(headers);
+  const ip = headers['x-forwarded-for'].substring(0, indexOf(','));
   
-  const time = date.getTime();
-  
-  if (time) {
-    res.json({
-      "unix": time,
-      "utc": date.toUTCString(),
-    });
-  } else {
-    res.json({
-      "unix" : null,
-      "utc": null,
-    });
-  }
+  res.send('<h1>WhoAmI</h1>');
 });
 
 // listen for requests
