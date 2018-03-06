@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 
 // mongodb://<dbuser>:<dbpassword>@ds257838.mlab.com:57838/fcc-apis
 const URL = process.env.MONGOLAB_URI;
-console.log(URL);
+mongoose.connect(URL);
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
@@ -21,6 +21,24 @@ app.use(express.static('public'));
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
+});
+
+app.get("/new/:url", function(req, res) {
+  const url = req.params.url;
+  
+  var pattern = new RegExp('^(https?:\/\/)?'+ // protocol
+    '((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|'+ // domain name
+    '((\d{1,3}\.){3}\d{1,3}))'+ // OR ip (v4) address
+    '(\:\d+)?(\/[-a-z\d%_.~+]*)*'+ // port and path
+    '(\?[;&a-z\d%_.~+=-]*)?'+ // query string
+    '(\#[-a-z\d_]*)?$','i'); // fragment locater
+  if(!pattern.test(url)) {
+    alert("Please enter a valid URL.");
+    return false;
+  } else {
+    return true;
+  }
+
 });
 
 app.get('/api/whoami', function(req, res) {
