@@ -5,6 +5,7 @@
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
+var Shortened = require('./shortened');
 
 // mongodb://<dbuser>:<dbpassword>@ds257838.mlab.com:57838/fcc-apis
 const URL = process.env.MONGOLAB_URI;
@@ -24,19 +25,23 @@ app.get("/", function (req, res) {
 });
 
 app.get("/new/:url", function(req, res) {
-  const url = req.params.url;
+  const url = req.params.url.toLowerCase();
   
-  var pattern = new RegExp('^(https?:\/\/)?'+ // protocol
-    '((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|'+ // domain name
-    '((\d{1,3}\.){3}\d{1,3}))'+ // OR ip (v4) address
-    '(\:\d+)?(\/[-a-z\d%_.~+]*)*'+ // port and path
-    '(\?[;&a-z\d%_.~+=-]*)?'+ // query string
-    '(\#[-a-z\d_]*)?$','i'); // fragment locater
-  if(!pattern.test(url)) {
-    alert("Please enter a valid URL.");
-    return false;
-  } else {
-    return true;
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+      // must contain at least one .
+      if (url.indexOf('.') > url.indexOf('://')) {
+        // could overwrite
+          const ID = Math.floor(Math.random() * (1000 + 9999) - 1000);
+          Shortened.create({}, function(err, newShort) {
+            if (err) {
+              console.error(err);
+              return;
+            } else {
+              console.log(newShort);
+              res.json(newShort);
+            }
+          });
+      }
   }
 
 });
