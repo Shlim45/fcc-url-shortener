@@ -21,10 +21,15 @@ app.get("/", function (req, res) {
 app.get('/api/whoami', function(req, res) {
   const {headers} = req;
   
-  console.log(headers);
-  const ip = headers['x-forwarded-for'].substring(0, indexOf(','));
+  const ip = headers['x-forwarded-for'].substring(0, headers['x-forwarded-for'].indexOf(','));  
+  const language = headers['accept-language'].substring(0, headers['accept-language'].indexOf(','));
+  const software = headers['user-agent'].substring(headers['user-agent'].indexOf('(') + 1, headers['user-agent'].indexOf(')'));
   
-  res.send('<h1>WhoAmI</h1>');
+  res.json({
+    "ipaddress": ip,
+    "language": language,
+    "software": software,
+  });
 });
 
 // listen for requests
