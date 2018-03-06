@@ -26,21 +26,26 @@ app.get("/", function (req, res) {
 
 app.get("/new/*", function(req, res) {
   
-  const url = req.url.substring('/new/', req.url.length);
+  const url = req.url.substring('/new/'.length, req.url.length);
   console.log(url);
   
   if (url.startsWith('http://') || url.startsWith('https://')) {
       // must contain at least one .
       if (url.indexOf('.') > url.indexOf('://')) {
         // could overwrite
-          const ID = Math.floor(Math.random() * (1000 + 9999) - 1000);
-          Shortened.create({}, function(err, newShort) {
+          const id = Math.floor(Math.random() * (1000 - 9999) + 1000);
+          Shortened.create({ id, url }, function(err, newShort) {
             if (err) {
               console.error(err);
               return;
             } else {
               console.log(newShort);
-              res.json(newShort);
+              const original_url = newShort.url;
+              const short_url = "https://friendly-surfboard.glitch.me/" + newShort.id;
+              res.json({
+                original_url,
+                short_url
+              });
             }
           });
       } else {
@@ -50,6 +55,11 @@ app.get("/new/*", function(req, res) {
     res.send("<h1>Bad request</h1>");
   }
 
+});
+
+app.get("/new/:id", function(req, res) {
+  const {id} = req.params;
+  
 });
 
 // listen for requests
